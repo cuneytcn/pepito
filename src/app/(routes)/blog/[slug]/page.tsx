@@ -11,10 +11,20 @@ import Link from 'next/link';
 
 // Sayfa parametreleri için tip tanımı
 type Props = {
-  params: { slug: string };
+  params: {
+    slug: string;
+  };
 };
 
 // Bu fonksiyon gerçek bir uygulamada API'den veya veritabanından veri çekecektir
+export async function generateMetadata({ params }: Props): Promise<any> {
+  const pet = getBlogPost(params.slug);
+  return {
+    title: `${pet?.name} - ${pet?.breed}`,
+    description: pet?.description,
+  };
+}
+
 function getBlogPost(slug: string) {
   const posts = [
     {
